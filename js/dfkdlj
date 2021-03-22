@@ -1,0 +1,25 @@
+$(document).ready(function(){
+    const ajaxData ={
+        method : 'get',
+        dataType : 'json',
+    };
+    $.ajax('../data/page-1.json',ajaxData)
+    .then(data =>data.forEach(element => {
+        let card =  new Photo(element.image_url,element.title,element.description,element.keyword,element.horns); 
+       $('#card').append( '<div><h1></h1><img/><p></p></div>');
+       $('h1').text(element.title);
+       $('p').text(element.description);
+       $('img').attr('src',element.image_url);
+
+       
+    }));            
+}
+);
+function Photo (imgUrl,title,des ,keyWord,horns){
+    this.imgUrl=imgUrl;
+    this.title=title;
+    this.des =des;
+    this.keyWord=keyWord;
+    this.horns=horns;
+    // console.log(this);
+}
