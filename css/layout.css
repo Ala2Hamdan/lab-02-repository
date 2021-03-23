@@ -6,3 +6,14 @@ div{
     display: none;     
     margin: 10px;          
 }
+button{
+    height: 30px;
+    width: 70px;
+}
+button:hover{
+    height: 35px;
+    width: 65px;
+    border-radius: 5px;
+    background-color: bisque;
+
+}
