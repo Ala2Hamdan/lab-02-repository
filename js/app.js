@@ -1,6 +1,6 @@
   
 'user strict';
-
+$('document').ready(getImagesData);
 function Photo(image_url,title,description,keyword,horns){
     this.image_url= image_url;
     this.title= title;
@@ -9,28 +9,28 @@ function Photo(image_url,title,description,keyword,horns){
     this.horns= horns;
 }
 Photo.prototype.render = function(){
-    let photoSection =$('#my-template').clone();
-    $('main').append(photoSection);
-    photoSection.find('h2').text(this.title);
-    photoSection.find('img').attr('src',this.image_url);
-    photoSection.find('p').text(this.description);
+    let divRender =$('#my-template').clone();
+    $('main').append(divRender);
+    divRender.find('h2').text(this.title);
+    divRender.find('img').attr('src',this.image_url);
+    divRender.find('p').text(this.description);
     $('select').append(`<option value='${this.keyword}'>${this.keyword}</option>`);
     
    
   
-    photoSection.removeAttr('id');
+    divRender.removeAttr('id');
 
 }
-Photo.prototype.selected = function () {
-    let photoSection =$('#my-template').clone();
-    $('main').append(photoSection);
-    photoSection.find('h2').text(this.title);
-    photoSection.find('img').attr('src',this.image_url);
-    photoSection.find('p').text(this.description);
+Photo.prototype.renderKeyWord = function () {
+    let divRender =$('#my-template').clone();
+    $('main').append(divRender);
+    divRender.find('h2').text(this.title);
+    divRender.find('img').attr('src',this.image_url);
+    divRender.find('p').text(this.description);
     $('select').append(`<option value='${this.keyword}'>${this.keyword}</option>`);
     
     
-    photoSection.removeAttr('id');
+    divRender.removeAttr('id');
    
 };
 $('select').change(function () {
@@ -60,7 +60,7 @@ function geteveryThingDataByKey(key) {
             if(item.keyword===key){
                 ObjeverThing = new Photo( item.image_url,item.title,item.description, item.keyword,item.horns);
                
-                ObjeverThing .selected();
+                ObjeverThing .render();
             }
 
         });
@@ -73,16 +73,13 @@ function getImagesData(){
         method: 'get',
         dataType: 'json'
     }
-    console.log("json")
-    
     $.ajax('data/page-1.json', ajaxSettings).then(data=> {
         
         data.forEach(element=> {
             let imgObj = new Photo (element.image_url,element.title,element.description,element.keyword,element.horns);
-            imgObj.render();
+            imgObj.renderKeyWord();
             
         })
 })
 }
 
-$('document').ready(getImagesData);
